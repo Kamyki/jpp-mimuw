@@ -1,0 +1,104 @@
+<literal> ::= <integer-literal> | <string-literal> | <bool-literal>
+
+<integer-literal> ::= ["-"] <digit> \{<digit>\}
+
+<digit> ::= "0" | ... | "9"
+
+<string-literal> ::= "\"", \{<ASCII-character>\}, "\""
+
+<bool-literal> ::= "true" | "false"
+
+
+
+
+<type> ::= <arg-type> | <func-type>
+
+<arg-type> =  <simple-type> | <tuple-type>  |"type_of(" <identifier> ")"
+ 
+<simple-type> ::= "int" | "bool" | "string"
+
+<tuple-type> ::= "(" <type>, <type> \{", " <type> \} ")"
+
+<func-type> ::= <func-arg-type> "->" <type> | "() ->" <type>
+
+<func-arg-type> ::= <arg-type> | "(" <func-type> ")"
+
+
+
+<expr> = <arithmetic-expr> | <logical-expr> 
+
+<logical-expr> ::= <logical-and> \{"||" <logical-and>\}
+
+<logical-and> ::= <logical-rel> \{"&&" <logical-rel>\}
+
+<logical-rel> ::= <arithmetic-expr> <rel-operator> <arithmetic-expr>
+
+<rel-operator> ::= "\textless" | "\textgreater" | "\textless=" | "\textgreater=" | "==" | "!=" | "===" | "!=="
+
+<arithmetic-expr> ::= <mul-expr> \{("+" | "-") <arithmetic-expr>\}
+
+<mul-expr> ::= <term> \{("*" | "/" | "%") <term>\}
+
+<term> ::= <literal> | <identifier> | <type> | <paranthesis-expr> | <lambda-expr> | <tuple-expr> | <call-expr>
+
+<call-expr> ::= <term> "(" [<expr-list>] ")"
+
+<tuple-expr> ::= <expr>, <expr-list>
+
+<expr-list> ::= <expr> \{", " <expr>\}
+
+<parenthesis-expr> ::= "(" <expr> ")"
+
+<lambda-expr> ::= "func", <arguments-list> "->" <type> <block>
+
+
+
+<statement> ::= ((declaration> | <assign> | <expr> | <return> | <print>) ";") | <flow>
+
+<print> ::= print <expr-list>
+
+<assign> ::= <identifier-list> "=" <expr> 
+
+<flow-statement> ::= <if> | <while> | <for> 
+
+<if> ::= "if" <expr> <block> [\{"elif" <expr> <block>\} "else" <block>]
+
+<while> ::= "while" <expr> <block>
+
+<for> ::= "for" <identifier> "in" <range> <block>
+
+<range> ::= <expr> ".." <expr>
+
+<return> ::= "return" <expr-list>
+
+<block> ::= "{" \{<statement>]\} "}"
+
+
+<declaration> ::= ["const"] (<type>|"auto") <identifier-list> "=" <expr>
+
+<arguments-list> ::= "(" [<typed-identifier> \{", " <typed-identifier>\}] ")"
+
+<typed-identifier> ::=  <type> <identifier>
+
+<identifier-list> ::= <identifier> \{ ", " <identifier> \}
+
+<identifier> ::= (<lower-letter> | "_"), \{<letter> | <digit> | "_"\}
+
+<letter> ::= <upper-letter> | <lower-letter>
+
+<upper-letter> ::= "A" | ... | "Z"
+
+<lower-letter> ::= "a" | ... | "z"
+
+
+
+<Program> ::= "main" <block> 
+
+
+
+<comment> ::= <start-comment>  <end-comment>
+
+<start-comment> ::= <upper-letter> \{<ASCII-character>\}
+
+<end-comment> ::=  \{<ASCII-character>\} ("."|"?"|"!")
+
